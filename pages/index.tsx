@@ -5,6 +5,7 @@ import { Layout } from '@components/Layout'
 import { PostView } from '@components/PostView'
 import { HeaderIndex } from '@components/HeaderIndex'
 import { StickyNavContainer } from '@effects/StickyNavContainer'
+import { StartHere } from '@components/StartHere';
 import { SEO } from '@meta/seo'
 
 import { processEnv } from '@lib/processEnv'
@@ -48,6 +49,7 @@ export default function Index({ cmsData }: IndexProps) {
         activeClass="fixed-nav-active"
         render={(sticky) => (
           <Layout {...{ bodyClass, sticky, settings, isHome: true }} header={<HeaderIndex {...{ settings }} />}>
+            <StartHere />
             <PostView {...{ settings, posts, isHome: true }} />
           </Layout>
         )}
