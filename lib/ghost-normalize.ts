@@ -19,7 +19,7 @@ export const normalizePost = async (post: PostOrPage, cmsUrl: UrlWithStringQuery
   if (!cmsUrl) throw Error('ghost-normalize.ts: cmsUrl expected.')
   const rewriteGhostLinks = withRewriteGhostLinks(cmsUrl, basePath)
 
-  const processors = [rewriteGhostLinks, rewriteRelativeLinks, syntaxHighlightWithPrismJS, rewriteInlineImages]
+  const processors = [rewriteGhostLinks, rewriteRelativeLinks, addBlankTargetToLinks, syntaxHighlightWithPrismJS, rewriteInlineImages]
 
   let htmlAst = rehype.parse(post.html || '')
   for (const process of processors) {
@@ -77,11 +77,13 @@ const rewriteRelativeLinks = (htmlAst: Node) => {
     const href = node.properties?.href
     if (href && !href.startsWith(`http`)) {
       const copyOfNode = cloneDeep(node)
+      console.log('hi')
       delete copyOfNode.properties
       delete copyOfNode.position
       copyOfNode.tagName = `span`
       node.tagName = `Link`
       node.children = [copyOfNode]
+      console.log(node)
     }
   })
 
@@ -196,6 +198,17 @@ const rewriteInlineImages = async (htmlAst: Node) => {
       let parentStyle = parent.properties.style || []
       if (typeof parentStyle === 'string') parentStyle = [parentStyle]
       parent.properties.style = [...parentStyle, flex]
+    }
+  })
+
+  return htmlAst
+}
+
+const addBlankTargetToLinks = (htmlAst: Node) => {
+  visit(htmlAst, { tagName: `a` }, (node: LinkElement) => {
+    const href = node.properties?.href
+    if (node.properties) {
+      node.properties.target = '_blank'
     }
   })
 
