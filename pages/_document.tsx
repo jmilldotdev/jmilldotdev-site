@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 import { resolve } from 'url'
-import { GA_MEASUREMENT_ID } from '@lib/gtag'
 import { processEnv } from '@lib/processEnv'
 
 export default class MyDocument extends Document {
