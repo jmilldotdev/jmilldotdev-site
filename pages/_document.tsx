@@ -10,6 +10,7 @@ export default class MyDocument extends Document {
   }
 
   render() {
+    const isProduction = process.env.NODE_ENV === 'production'
     const { pageProps } = this.props.__NEXT_DATA__.props
     const { cmsData, settings } = pageProps || { cmsData: null, settings: null }
     const { settings: cmsSettings, bodyClass } = cmsData || { settings: null, bodyClass: '' }
@@ -19,6 +20,12 @@ export default class MyDocument extends Document {
       <Html {...{ lang, className: 'casper' }}>
         <Head>
           <link rel="alternate" type="application/rss+xml" title="Jamify RSS Feed" href={`${resolve(processEnv.siteUrl, 'rss.xml')}`} />
+          {isProduction && (
+            <Fragment>
+              {/* Global Site Tag (gtag.js) - Google Analytics */}
+              <script defer data-domain="jmill.dev" src="https://plausible.io/js/plausible.js" />
+            </Fragment>
+          )}
         </Head>
         <body {...{ className: bodyClass }}>
           <script
