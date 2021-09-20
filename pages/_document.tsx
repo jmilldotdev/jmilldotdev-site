@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
   }
 
   render() {
-    const isProduction = process.env.NODE_ENV === 'production'
     const { pageProps } = this.props.__NEXT_DATA__.props
     const { cmsData, settings } = pageProps || { cmsData: null, settings: null }
     const { settings: cmsSettings, bodyClass } = cmsData || { settings: null, bodyClass: '' }
@@ -20,23 +19,6 @@ export default class MyDocument extends Document {
       <Html {...{ lang, className: 'casper' }}>
         <Head>
           <link rel="alternate" type="application/rss+xml" title="Jamify RSS Feed" href={`${resolve(processEnv.siteUrl, 'rss.xml')}`} />
-          <Fragment>
-            {/* Global Site Tag (gtag.js) - Google Analytics */}
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('config', '${GA_MEASUREMENT_ID}', {
-                  page_path: window.location.pathname,
-                })
-                `,
-              }}
-            />
-          </Fragment>
         </Head>
         <body {...{ className: bodyClass }}>
           <script
