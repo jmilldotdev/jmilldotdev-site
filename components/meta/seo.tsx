@@ -28,6 +28,7 @@ export const SEO = (props: SEOProps) => {
 
   const router = useRouter()
   const siteUrl = settings.processEnv.siteUrl
+  const siteName = settings.title
   const canonical = url.resolve(siteUrl, router.asPath)
 
   const { twitter, title: settingsTitle, description: settingsDescription, meta_title, meta_description } = settings
@@ -44,7 +45,7 @@ export const SEO = (props: SEOProps) => {
       <meta property="og:type" content={type} />
       <meta property="og:title" content={og_title || title} />
       <meta property="og:description" content={og_description || description} />
-      <meta property="og:site_name" content={title} />
+      <meta property="og:site_name" content={siteName} />
       <meta property="og:url" content={canonical} />
       {published_at && <meta property="article:published_time" content={published_at} />}
       {updated_at && <meta property="article:modified_time" content={updated_at} />}
