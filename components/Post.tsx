@@ -15,7 +15,6 @@ import { PreviewPosts } from '@components/PreviewPosts'
 import { RenderContent } from '@components/RenderContent'
 import { CommentoComments } from '@components/CommentoComments'
 import { DisqusComments } from '@components/DisqusComments'
-import { Subscribe } from '@components/Subscribe'
 import { TableOfContents } from '@components/toc/TableOfContents'
 
 import { StickyNavContainer } from '@effects/StickyNavContainer'
@@ -28,6 +27,7 @@ import { collections } from '@lib/collections'
 import { ISeoImage } from '@meta/seoImage'
 
 import React from 'react'
+import ConvertKitSubscribe from './ConvertKitSubscribe'
 
 interface PostProps {
   cmsData: {
@@ -152,7 +152,7 @@ export const Post = ({ cmsData }: PostProps) => {
                   </div>
                 </section>
 
-                {memberSubscriptions && <Subscribe {...{ settings }} />}
+                {memberSubscriptions && <ConvertKitSubscribe />}
 
                 {commenting.system === 'commento' && <CommentoComments {...{ id: post.id, url: commenting.commentoUrl }} />}
 
